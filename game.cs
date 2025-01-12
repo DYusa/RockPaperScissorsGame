@@ -8,6 +8,8 @@ namespace RockPaperScissors
         {
             string[] choices = { "Rock", "Paper", "Scissors" };
             Random random = new Random();
+            int playerScore = 0;
+            int computerScore = 0;
 
             Console.WriteLine("Welcome to Rock, Paper, Scissors!");
 
@@ -18,7 +20,9 @@ namespace RockPaperScissors
 
                 if (playerChoice == "quit")
                 {
-                    Console.WriteLine("Thanks for playing! Goodbye!");
+                    Console.WriteLine("Thanks for playing!");
+                    Console.WriteLine($"Final Scores - You: {playerScore}, Computer: {computerScore}");
+                    Console.WriteLine("Goodbye!");
                     break;
                 }
 
@@ -36,6 +40,19 @@ namespace RockPaperScissors
 
                 string result = DetermineWinner(playerChoice, computerChoice.ToLower());
                 Console.WriteLine(result);
+
+                // Update scores
+                if (result == "You win!")
+                {
+                    playerScore++;
+                }
+                else if (result == "Computer wins!")
+                {
+                    computerScore++;
+                }
+
+                // Display current scores
+                Console.WriteLine($"Current Scores - You: {playerScore}, Computer: {computerScore}");
             }
         }
 
