@@ -12,6 +12,9 @@ class RockPaperScissors:
         self.encoder = LabelEncoder()
         self.encoder.fit(["rock", "paper", "scissors"])
         self.is_trained = False
+        self.player_score = 0
+        self.computer_score = 0
+        self.tie_score = 0
 
     def predict_player_move(self):
         if len(self.player_choices) < 5 or not self.is_trained:
@@ -47,12 +50,21 @@ class RockPaperScissors:
 
     def determine_winner(self, player_choice, computer_choice):
         if player_choice == computer_choice:
+            self.tie_score += 1
             return "It's a tie!"
         if (player_choice == "rock" and computer_choice == "scissors") or \
            (player_choice == "paper" and computer_choice == "rock") or \
            (player_choice == "scissors" and computer_choice == "paper"):
+            self.player_score += 1
             return "You win!"
+        self.computer_score += 1
         return "Computer wins!"
+
+    def display_scores(self):
+        print("\nCurrent Scores:")
+        print(f"Player: {self.player_score}")
+        print(f"Computer: {self.computer_score}")
+        print(f"Ties: {self.tie_score}")
 
     def play_game(self):
         print("Welcome to Rock, Paper, Scissors with Machine Learning!")
@@ -64,6 +76,7 @@ class RockPaperScissors:
 
             if player_choice == "quit":
                 print("Thanks for playing!")
+                self.display_scores()
                 break
 
             if player_choice not in ["rock", "paper", "scissors"]:
@@ -83,6 +96,9 @@ class RockPaperScissors:
 
             # Retrain model
             self.train_model()
+
+            # Display updated scores
+            self.display_scores()
 
 if __name__ == "__main__":
     game = RockPaperScissors()
