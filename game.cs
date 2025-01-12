@@ -8,25 +8,35 @@ namespace RockPaperScissors
         {
             string[] choices = { "Rock", "Paper", "Scissors" };
             Random random = new Random();
-            
+
             Console.WriteLine("Welcome to Rock, Paper, Scissors!");
-            Console.WriteLine("Enter your choice (Rock, Paper, or Scissors): ");
-            
-            string playerChoice = Console.ReadLine()?.Trim().ToLower();
-            if (playerChoice != "rock" && playerChoice != "paper" && playerChoice != "scissors")
+
+            while (true)
             {
-                Console.WriteLine("Invalid input. Please choose Rock, Paper, or Scissors.");
-                return;
+                Console.WriteLine("\nEnter your choice (Rock, Paper, or Scissors) or type 'quit' to exit:");
+                string playerChoice = Console.ReadLine()?.Trim().ToLower();
+
+                if (playerChoice == "quit")
+                {
+                    Console.WriteLine("Thanks for playing! Goodbye!");
+                    break;
+                }
+
+                if (playerChoice != "rock" && playerChoice != "paper" && playerChoice != "scissors")
+                {
+                    Console.WriteLine("Invalid input. Please choose Rock, Paper, or Scissors.");
+                    continue;
+                }
+
+                int computerChoiceIndex = random.Next(choices.Length);
+                string computerChoice = choices[computerChoiceIndex];
+
+                Console.WriteLine($"You chose: {playerChoice}");
+                Console.WriteLine($"The computer chose: {computerChoice}");
+
+                string result = DetermineWinner(playerChoice, computerChoice.ToLower());
+                Console.WriteLine(result);
             }
-
-            int computerChoiceIndex = random.Next(choices.Length);
-            string computerChoice = choices[computerChoiceIndex];
-            
-            Console.WriteLine($"You chose: {playerChoice}");
-            Console.WriteLine($"The computer chose: {computerChoice}");
-
-            string result = DetermineWinner(playerChoice, computerChoice.ToLower());
-            Console.WriteLine(result);
         }
 
         static string DetermineWinner(string player, string computer)
